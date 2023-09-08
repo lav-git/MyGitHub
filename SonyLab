@@ -1,0 +1,58 @@
+import urllib.request         #Module to work with URL's
+import json                   # Module to work with json
+
+
+your_url = 'https://www.travel-advisory.info/api'   
+
+with urllib.request.urlopen(your_url) as url:
+    data = json.loads(url.read().decode())        # Parse json
+    print(data)                                   # Prints dictionary
+
+
+#Program to get country code
+name = input("Enter country name ")
+
+for name in data:
+  print(data.get("continent"))      # To pring continent for given country name
+
+
+
+
+#################################################################
+
+
+# GET /health # Returns health of service
+# GET /diag   #API status
+# GET /convert #Converts country code to API
+
+import requests
+api_url = "https://www.travel-advisory.info/api"
+response = requests.get(api_url)
+response.json()
+response.status_code    #Returns status code
+
+
+###############################################################
+
+# To setup local k8s cluster
+
+docker build -t mycluster:1.0 .
+kubectl apply -f mycluster.deploy.yml
+kubectl apply -f mycluster.service.yml
+
+docker run mycluster --image=mycluster:1.0
+kubectl apply -f apppods.yml
+
+kubectl get pods
+kubectl exec podname -c mycluster -it /bin/sh  #inspect pod
+
+
+################################################################
+
+# Monitoring Setup using below tools
+
+Kubernetes Dashboard	# To monitor Kubernetes cluster (nodes, pods, services, deployments etc. along with resource utilisation)
+Prometheus          # To collect API metrics
+Grafana             # Visualization setup
+ELK statck          # TO monitor events
+
